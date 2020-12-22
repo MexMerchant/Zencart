@@ -4,7 +4,7 @@
 
 - Introduction
 - Prerequisites
-- Installing the payment module
+- Installing and configuring the module
 - License
 
 # Introduction
