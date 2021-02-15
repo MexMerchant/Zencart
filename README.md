@@ -17,7 +17,6 @@ This Zencart module provides an easy method to integrate with the payment gatewa
 
 - The module requires the following prerequisites to be met in order to function correctly:
     - For a full list of requirements please see: https://docs.zen-cart.com/user/first_steps/server_requirements/
-    - SSL **NB: HTTPS is expected to be in place as the payment gateway will respond over SSL when integrating directly. Failure to provide an environment where HTTPS traffic is possible, will result in the 3DSv2 payment flow failing***
 
 > Please note that we can only offer support for the Module itself. While every effort has been made to ensure the payment module is complete and bug free, we cannot guarentee normal functionality if unsupported changes are made.
 
