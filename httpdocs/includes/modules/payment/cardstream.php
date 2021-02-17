@@ -440,6 +440,10 @@ HTML;
 
         $successUrl = zen_href_link(FILENAME_CHECKOUT_SUCCESS, '', 'SSL', true, false);
 
+        if (MODULE_PAYMENT_CARDSTREAM_CAPTURE_TYPE == 'Hosted') {
+           return;
+        }
+
         if (MODULE_PAYMENT_CARDSTREAM_CAPTURE_TYPE == 'Direct V2') {
             echo <<<HTML
 Processing secure form, please wait ...
