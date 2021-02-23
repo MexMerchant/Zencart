@@ -18,7 +18,7 @@ This Zencart module provides an easy method to integrate with the payment gatewa
 - The module requires the following prerequisites to be met in order to function correctly:
     - For a full list of requirements please see: https://docs.zen-cart.com/user/first_steps/server_requirements/
 
-> Please note that we can only offer support for the Module itself. While every effort has been made to ensure the payment module is complete and bug free, we cannot guarantee normal functionality if unsupported changes are made.
+> Please note that we can only offer support for the module itself. While every effort has been made to ensure the payment module is complete and bug free, we cannot guarantee normal functionality if unsupported changes are made.
 
 # Installing and configuring the module
 
@@ -31,7 +31,7 @@ ALTER TABLE my_table_name ADD COLUMN `cardstream_xref` VARCHAR(128) NULL, ADD CO
 TEXT NULL, ADD COLUMN `cardstream_lastAction` VARCHAR(32) NULL
 ```
 
-3. Mouseover the Modules link in the top menu and click 'Payment'. Next, click the circle for CardStream Form and finally click 'install' on the right side of the screen
+3. Mouseover the "Modules" link in the top menu and click 'Payment'. Next, click the circle for CardStream Form and finally click 'install' on the right side of the screen
 4. Follow the instructions that appear, and enter all the necessary details, such as the Merchant ID and signature. Click 'update', and Cardstream is now integrated with your shopping cart
 
 If you would like to make edits to the Cardstream Integration such as updating the Merchant ID, hover over the modules drop down menu and click payments. Click on 'Cardstream Integration' in the list that appears, and click on 'edit' on the right hand side.
