@@ -23,7 +23,7 @@ This Zencart module provides an easy method to integrate with the payment gatewa
 # Installing and configuring the module
 
 1. Make sure that all files inside the httpdocs folder are inserted into the root directory of where Zen Cart is installed (including cardstream_callback.php in the main folder)
-2. Some installations will not require you to run the SQL files provided. However, strict database privileges on a server (specifically CREATE, DELETE and ALTER) will prevent the a full installation of this module. If this is the case, you will need to manually run the SQL into your site's database with CREATE, and ALTER priveledges; making sure to allow DELETE access for cardstream_temp_carts normal operation which will help keep the table clean and save space. Ensure that you enter your correct table name (my_table_name in the example below) in orders.sql
+2. Some installations will not require you to run the SQL files provided. However, strict database privileges on a server (specifically CREATE, DELETE and ALTER) will prevent the a full installation of this module. If this is the case, you will need to manually run the SQL into your site's database with CREATE, and ALTER privileges; making sure to allow DELETE access for cardstream_temp_carts normal operation which will help keep the table clean and save space. Ensure that you enter your correct table name (my_table_name in the example below) in orders.sql
 
 ```
 ALTER TABLE my_table_name ADD COLUMN `cardstream_xref` VARCHAR(128) NULL, ADD COLUMN `cardstream_transactionUnique` VARCHAR(128) NULL, ADD COLUMN
