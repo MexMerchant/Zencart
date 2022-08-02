@@ -6,7 +6,7 @@
 // EOF: File protection
 
 
-define('MODULE_PAYMENT_CARDSTREAM_DIRECT_URL','https://test.3ds-pit.com/direct/');
+define('MODULE_PAYMENT_CARDSTREAM_DIRECT_URL','https://gateway.cardstream.com/direct/');
 define('MODULE_PAYMENT_CARDSTREAM_MODAL_URL','https://gateway.cardstream.com/hosted/modal');
 define('MODULE_PAYMENT_CARDSTREAM_FORM_URL', 'https://gateway.cardstream.com/hosted/');
 

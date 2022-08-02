@@ -1,7 +1,7 @@
 <?php
 // File protection
 if (!defined('IS_ADMIN_FLAG')) {
-    die('Illegal Access');
+    exit('Illegal Access');
 }
 $_SESSION['payment_attempt'] = 0;
 require(__DIR__ . '/cardstream/StageOrder.php');
@@ -193,7 +193,6 @@ class cardstream {
             "customerPhone"     => $order->customer['telephone'],
             "securityToken"     => $_SESSION['securityToken'],
 //            "formResponsive"    => MODULE_PAYMENT_CARDSTREAM_RESPONSIVE_TYPE == 'True' ? 'Y' : 'N',
-            "threeDSVersion"    => 2,
         );
     }
 
@@ -240,7 +239,7 @@ class cardstream {
                 $req = $this->create_direct_request();
                 $this->res = $this->make_request(MODULE_PAYMENT_CARDSTREAM_DIRECT_URL, $req);
 
-                $pageUrl = str_replace('&amp;', '&', zen_href_link(FILENAME_CHECKOUT_PROCESS, '', 'SSL', true)).'&'.session_name().'='.session_id().'&xref='.$this->res['xref'].'&XDEBUG_SESSION_START=something';
+                $pageUrl = str_replace('&amp;', '&', zen_href_link(FILENAME_CHECKOUT_PROCESS, '', 'SSL', true)) . '&' . session_name() . '=' . session_id() . '&xref=' . $this->res['xref'];
 
                 if ($this->res['responseCode'] == 65802) {
                     $silentPost = $this->silentPost(
@@ -253,7 +252,7 @@ class cardstream {
                     );
                     echo $silentPost;
 
-                    die();
+                    exit();
                 }
             }
 
@@ -275,22 +274,20 @@ class cardstream {
 
             // initial request
             if (isset($_POST['browserInfo'])) {
-                $pageUrl = str_replace('&amp;', '&', zen_href_link(FILENAME_CHECKOUT_PROCESS, '', 'SSL', true)).'&'.session_name().'='.session_id().'&XDEBUG_SESSION_START=soething';
+                $pageUrl = str_replace('&amp;', '&', zen_href_link(FILENAME_CHECKOUT_PROCESS, '', 'SSL', true)) . '&' . session_name() . '=' .session_id();
 
                 $req = array_merge(
                     $this->create_direct_request(),
                     $_POST['browserInfo'],
                     array(
-                        'threeDSVersion'       => 2,
                         'remoteAddress'        => $_SERVER['REMOTE_ADDR'],
-                        'merchantCategoryCode' => 5411, // TODO: move to settings
                         'threeDSRedirectURL'   => $pageUrl,
                     )
                 );
 
                 $this->res = $this->make_request(MODULE_PAYMENT_CARDSTREAM_DIRECT_URL, $req);
 
-                setcookie('threeDSRef', $this->res['threeDSRef'], time()+315);
+                setcookie('threeDSRef', $this->res['threeDSRef'], time()+3600);
 
                 if ($this->res['responseCode'] == 65802) {
                     // Silently POST the 3DS request to the ACS in the IFRAME
@@ -298,16 +295,15 @@ class cardstream {
                         $this->res['threeDSURL'],
                         array(
                             'threeDSRef' => rawurlencode($this->res['threeDSRef']),
-                            'threeDSMethodData' => rawurlencode($this->res['threeDSRequest']['threeDSMethodData'])
-                        )
+                        ) + $this->res['threeDSRequest'],
                     );
 
-                    die();
+                    exit();
                 }
             }
 
             // challenge
-            if (isset($_POST['threeDSMethodData']) || isset($_POST['cres'])) {
+            if (isset($_POST['threeDSMethodData']) || isset($_POST['cres']) || isset($_POST['PaRes']) ) {
                 $req = array(
                     'merchantID' => MODULE_PAYMENT_CARDSTREAM_MERCHANT_ID,
                     'type' => 1,
@@ -321,14 +317,14 @@ class cardstream {
 
                 if ($this->res['responseCode'] == 65802) {
 
-                    setcookie('threeDSRef', $this->res['threeDSRef'], time()+315);
+                    setcookie('threeDSRef', $this->res['threeDSRef'], time()+3600);
 
                     // Render an IFRAME to show the ACS challenge (hidden for fingerprint method)
                     $style = (isset($this->res['threeDSRequest']['threeDSMethodData']) ? 'display: none;' : '');
                     echo "<iframe name=\"threeds_acs\" style=\"height:420px; width:420px; {$style}\"></iframe>\n";
 
                     // Silently POST the 3DS request to the ACS in the IFRAME
-                    echo $this->silentPost($this->res['threeDSURL'], $this->res['threeDSRequest'], 'threeds_acs');
+                    echo $this->silentPost($this->res['threeDSURL'], $this->res['threeDSRequest']);
 
                     die();
                 }
